@@ -15,9 +15,12 @@
 <body>
     <h1>JSON</h1>
     <h3>JavaScript Object Notation</h3>
-    <ul id="users-container">
+    <ul id="users-container"></ul>
 
-    </ul>
+    <input type="text" name="title" id="title" placeholder="Title goes here">
+    <input type="text" name="body" id="body" placeholder="Your Post Body">
+    <button id="submit">Submit</button>
+
     <script>
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
@@ -34,6 +37,30 @@
                 li.innerText = username;
                 ul.appendChild(li);
             }
+        }
+    </script>
+
+    <script>
+        document.getElementById("submit").addEventListener("click", function() {
+            const title = document.getElementById("title").value;
+            const body = document.getElementById("body").value;
+            const post = {
+                title: title,
+                body: body
+            };
+            newPostToServer(post);
+        })
+
+        function newPostToServer(postInfo) {
+            fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    body: JSON.stringify(postInfo),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                .then((response) => response.json())
+                .then((json) => console.log(json));
         }
     </script>
 </body>
