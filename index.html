@@ -15,19 +15,25 @@
 <body>
     <h1>JSON</h1>
     <h3>JavaScript Object Notation</h3>
-    <script>
-        // const user = {
-        //     id: 183,
-        //     name: "fufu"
-        // };
-        // const userJSON = JSON.stringify(user);
-        // const userFromJSON = JSON.parse(userJSON);
+    <ul id="users-container">
 
-        // console.log(userJSON);
-        // console.log(userFromJSON);
-        fetch('https://jsonplaceholder.typicode.com/users')
+    </ul>
+    <script>
+        fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
-            .then(json => console.log(json))
+            .then(json => displayUser(json))
+
+        function displayUser(users) {
+            const userNames = users.map(user => user.username);
+            const ul = document.getElementById("users-container");
+
+            for (let i = 0; i < userNames.length; i++) {
+                const username = userNames[i];
+                const li = document.createElement("li");
+                li.innerText = username;
+                ul.appendChild(li);
+            }
+        }
     </script>
 </body>
 
